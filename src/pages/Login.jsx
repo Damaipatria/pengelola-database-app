@@ -1,9 +1,15 @@
 import { Formik } from "formik"
+import { useNavigate } from "react-router-dom"
 
 export const Login = () => {
 
+  const navigate = useNavigate()
+
   const onSubmitLoginForm = ((values, { resetFrom }) => {
-    console.log(values)
+    localStorage.setItem("username", values.username)
+    localStorage.setItem("password", values.password)
+
+    navigate('/')
   })
 
   return (
@@ -19,7 +25,7 @@ export const Login = () => {
             }}
             onSubmit={onSubmitLoginForm}
           >
-            {({ handleSubmit }) => (
+            {({ handleChange, handleSubmit }) => (
               <>
                 <form onSubmit={handleSubmit} className="text-center">
                   <div className="flex flex-col gap-3 mb-5">
@@ -28,15 +34,17 @@ export const Login = () => {
                         type="text"
                         name="username"
                         placeholder="Username"
-                        className="w-full py-1.5 px-3 text-base border rounded-md focus:outline-none"
+                        onChange={handleChange}
+                        className="w-full py-1.5 px-3 text-base border rounded-md focus:outline-none focus:border-blue-500"
                       />
                     </div>
                     <div>
                       <input
                         type="password"
-                        name="username"
+                        name="password"
                         placeholder="Password"
-                        className="w-full py-1.5 px-3 text-base border rounded-md focus:outline-none"
+                        onChange={handleChange}
+                        className="w-full py-1.5 px-3 text-base border rounded-md focus:outline-none focus:border-blue-500"
                       />
                     </div>
                   </div>
