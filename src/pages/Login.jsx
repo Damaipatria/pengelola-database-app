@@ -8,6 +8,7 @@ export const Login = () => {
   const onSubmitLoginForm = ((values, { resetFrom }) => {
     localStorage.setItem("username", values.username)
     localStorage.setItem("password", values.password)
+    localStorage.setItem("access-right", ['ADMIN, SUPER_ADMIN'])
 
     navigate('/')
   })

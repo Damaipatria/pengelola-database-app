@@ -1,5 +1,7 @@
 import { Formik } from "formik"
 import { useState } from "react"
+import { Can } from "../../utils/casl"
+import { Card, Modal } from "../../components"
 
 let nextId = 1
 
@@ -15,14 +17,21 @@ export const Home = () => {
   const [showAddModal, setShowAddModal] = useState(false)
 
   const onAddData = ((values, { resetForm }) => {
-    setData([...data, { id: nextId++, nama: values?.nama, alamat: values.alamat }]);
-    setShowAddModal(!showAddModal);
+    // setData([...data, { id: nextId++, nama: values?.nama, alamat: values.alamat }]);
+    // setShowAddModal(!showAddModal);
+
+    console.log(values)
 
     resetForm();
   })
 
   const onRemoveData = (id) => {
     setData(data.filter((item) => { return item.id !== id }))
+  }
+
+  const addValidate = (values) => {
+    let errors = {}
+    return errors
   }
 
   return (
@@ -55,9 +64,16 @@ export const Home = () => {
                               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{item.nama}</td>
                               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{item.alamat}</td>
                               <td className="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
-                                <button onClick={() => onRemoveData(item.id)} type="button" className="inline-flex items-center gap-x-2 text-sm text-red-500 font-semibold rounded-lg border border-transparent hover:text-red-600 focus:outline-none focus:text-red-700 disabled:opacity-50 disabled:pointer-events-none">
-                                  delete
-                                </button>
+                                <div className="flex gap-5">
+                                  <Can I='read' a='NON_ADMIN'>
+                                    <button onClick={() => onRemoveData(item.id)} type="button" className="inline-flex items-center gap-x-2 text-sm text-blue-500 font-semibold rounded-lg border border-transparent hover:text-blue-600 focus:outline-none focus:text-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+                                      add
+                                    </button>
+                                  </Can>
+                                  <button onClick={() => onRemoveData(item.id)} type="button" className="inline-flex items-center gap-x-2 text-sm text-red-500 font-semibold rounded-lg border border-transparent hover:text-red-600 focus:outline-none focus:text-red-700 disabled:opacity-50 disabled:pointer-events-none">
+                                    delete
+                                  </button>
+                                </div>
                               </td>
                             </tr>
                           </>
@@ -70,8 +86,65 @@ export const Home = () => {
             </div>
           </div>
         </section>
+        <br />
+        <Card>
+          <Card.Header>
+            Card Header
+          </Card.Header>
+          <Card.Body>
+            Card Body
+          </Card.Body>
+          <Card.Footer>
+            Card Footer
+          </Card.Footer>
+        </Card>
 
-        <dialog open className={`${showAddModal ? 'opacity-100' : 'opacity-0 invisible'} w-full h-full absolute top-0 bg-black/30 transition-all duration-300`}>
+        <Formik
+          enableReinitialize
+          initialValues={{
+            nama: '',
+            alamat: '',
+          }}
+          onSubmit={(values) => {
+            console.log(values)
+          }}
+        >
+          {({ values, handleChange, handleReset, handleSubmit }) => (
+            <>
+              <Modal
+                show={showAddModal}
+                onHide={() => { setShowAddModal(!showAddModal); handleReset() }}
+                onSubmit={handleSubmit}
+                title="Tambah Data Umat"
+              >
+                <div className="flex flex-col gap-3 py-5">
+                  <div>
+                    <input
+                      type="text"
+                      name="nama"
+                      placeholder="Nama"
+                      value={values.nama}
+                      onChange={handleChange}
+                      className="w-full py-1.5 px-3 text-base border rounded-md focus:outline-none focus:border-blue-500"
+                    />
+                  </div>
+                  <div>
+                    <input
+                      type="text"
+                      name="alamat"
+                      placeholder="Alamat"
+                      value={values.alamat}
+                      onChange={handleChange}
+                      className="w-full py-1.5 px-3 text-base border rounded-md focus:outline-none focus:border-blue-500"
+                    />
+                  </div>
+                </div>
+              </Modal>
+            </>
+          )}
+        </Formik>
+
+        {/* <dialog open className={`${showAddModal ? 'opacity-100' : 'opacity-0 invisible'} w-full h-full absolute top-0 bg-black/30 transition-all duration-300`}>
           <div className="flex justify-center items-center h-full">
             <div className="basis-1/3 p-5 bg-white rounded-md">
               <div className="flex items-center gap-2 mb-5 pb-2 text-blue-500 border-b">
@@ -86,6 +159,8 @@ export const Home = () => {
                 initialValues={{
                   nama: '',
                   alamat: '',
+                  option: '',
+                  checked: []
                 }}
                 onSubmit={onAddData}
               >
@@ -113,6 +188,15 @@ export const Home = () => {
                             className="w-full py-1.5 px-3 text-base border rounded-md focus:outline-none focus:border-blue-500"
                           />
                         </div>
+                        <div>
+                          <input
+                            type="file"
+                            name="file"
+                            value={values?.file}
+                            onChange={handleChange}
+                            className="w-full py-1.5 px-3 text-base border rounded-md focus:outline-none focus:border-blue-500"
+                          />
+                        </div>
                       </div>
                       <div className="flex justify-end gap-4">
                         <span onClick={() => setShowAddModal(!showAddModal)} className="py-1.5 px-7 font-medium text-gray-700 border border-gray-700 rounded-md hover:bg-gray-700 hover:text-white active:bg-gray-800">Batal</span>
@@ -124,7 +208,7 @@ export const Home = () => {
               </Formik>
             </div>
           </div>
-        </dialog>
+        </dialog> */}
       </article>
     </>
   )

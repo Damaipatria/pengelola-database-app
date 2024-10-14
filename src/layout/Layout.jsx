@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Outlet, useNavigate } from "react-router-dom"
 
 export const Layout = () => {
@@ -8,11 +8,14 @@ export const Layout = () => {
 
   const navigate = useNavigate()
 
-  console.log(localStorage.getItem('username'))
-
-  if (localStorage.getItem('username') === null) {
+  if (localStorage.getItem('username') === null || localStorage.getItem('username') === '') {
     return navigate('/login')
   }
+  // useEffect(() => {
+  //   if (localStorage.getItem('username') === null || localStorage.getItem('username') === '') {
+  //     return navigate('/login')
+  //   }
+  // }, [])
 
   const onLogoutButtonClick = () => {
     localStorage.clear()
