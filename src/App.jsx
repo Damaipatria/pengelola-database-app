@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import { Layout } from "./layout"
-import { Home, Login } from "./pages"
+import { Home, Login, MasterWarga } from "./pages"
 
 function App() {
 
@@ -10,6 +10,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
+            <Route path="/master-warga" element={<MasterWarga />} />
           </Route>
           <Route path="/login" element={<Login />} />
         </Routes>

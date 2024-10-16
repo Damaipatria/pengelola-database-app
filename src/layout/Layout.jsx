@@ -10,9 +10,9 @@ export const Layout = () => {
 
   console.log(localStorage.getItem('username'))
 
-  if (localStorage.getItem('username') === null) {
-    return navigate('/login')
-  }
+  // if (localStorage.getItem('username') === null) {
+  //   return navigate('/login')
+  // }
 
   const onLogoutButtonClick = () => {
     localStorage.clear()

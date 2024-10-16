@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+/* input::-webkit-datetime-edit-year-field:not([aria-valuenow]),
+input::-webkit-datetime-edit-month-field:not([aria-valuenow]),
+input::-webkit-datetime-edit-day-field:not([aria-valuenow]) {
+    color: transparent;
+}
+
+input::-webkit-datetime-edit-day-field[aria-label] {
+  color: transparent;
+} */
+
 .h-sidebar {
   height: calc(100vh - 51px);
 }
@@ -13,3 +23,4 @@
     'GRAD' 0,
     /* 'opsz' 24 */
 }
+
