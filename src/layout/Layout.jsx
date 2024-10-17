@@ -16,6 +16,11 @@ export const Layout = () => {
   //     return navigate('/login')
   //   }
   // }, [])
+  console.log(localStorage.getItem('username'))
+
+  // if (localStorage.getItem('username') === null) {
+  //   return navigate('/login')
+  // }
 
   const onLogoutButtonClick = () => {
     localStorage.clear()
@@ -57,7 +62,7 @@ export const Layout = () => {
             </span>
           </li>
           <li className={`px-2`}>
-            <a href="/" className={`flex gap-3 items-center py-2 px-3 ${location.pathname === '/' ? 'text-blue-500 bg-blue-100' : 'text-gray-600 hover:bg-gray-100 active:bg-gray-200'}  rounded-md`}>
+            <a href="/" className={`flex gap-3 items-center py-2 px-3 ${location.pathname === '/master-warga' ? 'text-blue-500 bg-blue-100' : 'text-gray-600 hover:bg-gray-100 active:bg-gray-200'}  rounded-md`}>
               <span className="material-symbols-rounded font-light cursor-pointer select-none">
                 diversity_3
               </span>
